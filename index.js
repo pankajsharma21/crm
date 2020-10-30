@@ -14,9 +14,13 @@ app.use(bodyParser.json())
 mongoose.connect('mongodb://localhost/crm');
 //model client
 var clientSchema = mongoose.Schema({
-    name: String,
-    age: Number,
-    nationality: String
+    company_name: String,
+    person_name: String,
+    tel: Number,
+    email: String,
+    address: {
+          city: String,street: String,houseNumber: String
+      }
  });
  var client = mongoose.model("client", clientSchema)
 
@@ -25,22 +29,28 @@ var clientSchema = mongoose.Schema({
  app.post('/client', function(req, res){
     var clientInfo = req.body; //Get the parsed information
     
-    if(!clientInfo.name || !clientInfo.age || !clientInfo.nationality){
-       res.render('show_message', {
-          message: "Sorry, you provided worng info", type: "error"});
+    if(!clientInfo.company_name || !clientInfo.person_name || !clientInfo.tel){
+       res.json({ status: "error",
+          message: "Sorry, you provided worng info"});
     } else {
        var newClient = new client({
-          name: clientInfo.name,
-          age: clientInfo.age,
-          nationality: clientInfo.nationality
+         company_name: clientInfo.company_name,
+         person_name: clientInfo.person_name,
+         tel: clientInfo.tel,
+         email: clientInfo.email,
+         address: {
+                city: clientInfo.city,
+                street: clientInfo.street,
+                houseNumber: clientInfo.housenumber
+            }
        });
          
        newClient.save(function(err, Client){
           if(err)
-             res.render('show_message', {message: "Database error", type: "error"});
+             res.json({message: "Database error", status: "error"});
           else
-             res.render('show_message', {
-                message: "New person added", type: "success", client: clientInfo});
+             res.json({
+                message: "New person added",status: "success" , client: clientInfo});
        });
     }
  });
