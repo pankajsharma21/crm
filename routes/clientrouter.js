@@ -12,7 +12,6 @@ router.get('/viewmsg', function(req, res){
 
  router.post('/addclient', function(req, res){
     var clientInfo = req.body; //Get the parsed information
-    console.log(clientInfo);
     
     if(!clientInfo.company_name || !clientInfo.client_name || !clientInfo.tel){
        res.json({ status: "error",
