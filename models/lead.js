@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 
-//model client
+//model leads
 var leadSchema = new Schema({
     id: Number,
     created_on: Date,
@@ -21,7 +21,7 @@ var leadSchema = new Schema({
     isdelete: Boolean
 });
 
-//create model for client
+//create model for leads
 var lead = mongoose.model("lead", leadSchema)
 
 module.exports = lead;

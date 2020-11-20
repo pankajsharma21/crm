@@ -1,29 +1,30 @@
-const express = require('express');
-var bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 require('dotenv').config()
-var dburl = process.env.MONGO_DB_URL;
-//url router import
-const routes = require('./routes/clientrouter');
-const routes1 = require('./routes/salesrouter');
-const routes2 = require('./routes/leadrouter')
-const port = process.env.SERVER_PORT || 5000;
-const app = express();
-//To parse URL encoded data
-app.use(bodyParser.urlencoded({ extended: true }))
-//To parse json data
-app.use(bodyParser.json())
-//route to url router
-app.use('/client',routes);
-app.use('/sales',routes1);
-app.use('/lead',routes2);
-//connect to mongo db use mongo
-mongoose.connect(dburl);
 
- //default router
+const dburl = process.env.MONGO_DB_URL;
+const port = process.env.SERVER_PORT || 5000;
+
+// Initialize express app
+const express = require('express');
+const app = express();
+
+//To parse URL encoded data
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json()) //To parse json data
+
+// Import All routes
+const routes = require('./backend/routes');
+app.use('/', routes);
+
+//connect to mongo db use mongo
+const mongoose = require('mongoose');
+mongoose.connect(dburl, {useNewUrlParser: true, useUnifiedTopology: true});
+
+//default router
 app.get('/', function(req, res){
    res.send('GET route on things.');
 });
+
 app.listen(port, () => {
-   console.log(`Server started on port `+port);
+   console.log(`Server started on port ${port}`);
 });
