@@ -22,6 +22,6 @@ var leadSchema = new Schema({
 });
 
 //create model for client
-var client = mongoose.model("lead", leadSchema)
+var lead = mongoose.model("lead", leadSchema)
 
 module.exports = lead;

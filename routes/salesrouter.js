@@ -17,24 +17,23 @@ router.get('/viewmsg', function(req, res){
        res.json({ status: "error",
           message: "Sorry, you provided worng info"});
     } else {
-       var newClient = new client({
-         company_name: clientInfo.company_name,
-         person_name: clientInfo.person_name,
-         tel: clientInfo.tel,
-         email: clientInfo.email,
-         address: {
-                city: clientInfo.city,
-                street: clientInfo.street,
-                houseNumber: clientInfo.housenumber
-            }
+       var newemployee = new sales({
+         employee_id: employeeInfo.employee_id,
+         employee_name: employeeInfo.employee_name,
+         lead_pipeline: {
+            open_leads:employeeInfo.open_leads,
+            contacted_leads: employeeInfo.contacted_leads,
+            qualified_leads: employeeInfo.qualified_leads,
+            closed_lead: employeeInfo.closed_lead
+        }
        });
          
-       newClient.save(function(err, Client){
+       newemployee.save(function(err, Client){
           if(err)
              res.json({message: "Database error", status: "error"});
           else
              res.json({
-                message: "New person added",status: "success" , client: clientInfo});
+                message: "New person added",status: "success" , sales: employeeInfo});
        });
     }
  });
@@ -42,14 +41,14 @@ router.get('/viewmsg', function(req, res){
 
  //get all
 router.get('/views', function(req, res){
-    client.find(function(err, response){
+    sales.find(function(err, response){
        res.json(response);
     });
  });
 
  //get-one
  router.get('/view/:id', function(req, res){
-    client.findById(req.params.id, function(err, response){
+    sales.findById(req.params.id, function(err, response){
        res.json(response);
     });
  });
@@ -57,7 +56,7 @@ router.get('/views', function(req, res){
  //update
 
  router.put('/update/:id', function(req, res){
-    client.findByIdAndUpdate(req.params.id, req.body, function(err, response){
+    sales.findByIdAndUpdate(req.params.id, req.body, function(err, response){
        if(err) res.json({message: "Error in updating person with id " + req.params.id});
        res.json(response);
     });
@@ -65,7 +64,7 @@ router.get('/views', function(req, res){
 
  //delete
  router.delete('/delete/:id', function(req, res){
-    client.findByIdAndRemove(req.params.id, function(err, response){
+    sales.findByIdAndRemove(req.params.id, function(err, response){
        if(err) res.json({message: "Error in deleting record id " + req.params.id});
        else res.json({message: "Person with id " + req.params.id + " removed."});
     });
