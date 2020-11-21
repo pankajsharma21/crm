@@ -24,7 +24,7 @@ exports.update_single = function(req, res){
 
 // Handle delete single lead on DELETE request.
 exports.delete_single = function(req, res){
-    client.findByIdAndRemove(req.params.id, function(err, response){
+	Lead.findByIdAndRemove(req.params.id, function(err, response){
 		if(err) res.json({message: "Error in deleting record id " + req.params.id});
 		else res.json({message: "Lead with id " + req.params.id + " removed."});
     });
@@ -61,13 +61,13 @@ exports.create_post = function(req, res){
     		connected_times: leadInfo.connected_times,
     		is_delete: leadInfo.is_delete
 		});
-         
+		
 		newLead.save(function(err, leadInfo){
 			if(err)
 				res.json({message: "Database error", status: "error"});
 			else
             	res.json({
-                	message: "New client added",status: "success" , lead: leadInfo});
+                	message: "New lead added",status: "success" , lead: leadInfo});
 			});
 		}
 }

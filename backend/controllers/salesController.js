@@ -32,23 +32,22 @@ exports.delete_single = function(req, res){
 
 // Handle client create on POST request.
 exports.create_post = function(req, res){
-    var saleInfo = req.body; //Get the parsed information
-    
+   var saleInfo = req.body; //Get the parsed information
     if(!saleInfo.lead_pipeline || !saleInfo.employee_name){
         res.json({ status: "error",
            message: "Sorry, you provided worng info"});
      } else {
         var newSale = new Sale({
              employee_id: saleInfo.employee_id,
-    	     employee_name: SaleInfo.employee_name,
+    	     employee_name: saleInfo.employee_name,
     	     lead_pipeline: {
-                 open_leads: SaleInfo.open_leads,
-                 contacted_leads: SaleInfo.contacted_leads,
-                 qualified_leads: SaleInfo.qualifies_leads,
-                 closed_lead: SaleInfo.closed_lead
+                 open_leads: saleInfo.lead_pipeline.open_leads,
+                 contacted_leads: saleInfo.lead_pipeline.contacted_leads,
+                 qualified_leads: saleInfo.lead_pipeline.qualified_leads,
+                 closed_lead: saleInfo.lead_pipeline.closed_lead
     	     }
         });
-         
+         console.log(newSale);
         newSale.save(function(err, saleInfo){
         if(err)
             res.json({message: "Database error", status: "error"});

@@ -18,12 +18,12 @@ app.use('/', routes);
 
 //connect to mongo db use mongo
 const mongoose = require('mongoose');
-mongoose.connect(dburl, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(dburl, {useNewUrlParser: true, useUnifiedTopology: true,useFindAndModify: false });
 
 //default router
-app.get('/', function(req, res){
-   res.send('GET route on things.');
-});
+// app.get('/', function(req, res){
+//    res.send('GET route on things.');
+// });
 
 app.listen(port, () => {
    console.log(`Server started on port ${port}`);
