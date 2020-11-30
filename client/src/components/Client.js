@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-
+import base_url from "./../api/bootapi";
 import AddClient from './AddClient';
 import ListClient from './ListClient';
 
@@ -15,7 +15,7 @@ class Client extends Component {
   }
 
   getClients = () => {
-    axios.get('http://localhost:5000/clients')
+    axios.get(`${base_url}/clients`)
       .then(res => {
         if(res.data){
           this.setState({
@@ -28,7 +28,7 @@ class Client extends Component {
 
   deleteClient = (id) => {
 
-    axios.delete(`/api/clients/${id}`)
+    axios.delete(`${base_url}/clients${id}`)
       .then(res => {
         if(res.data){
           this.getClients()
