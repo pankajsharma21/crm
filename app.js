@@ -7,14 +7,6 @@ const port = process.env.SERVER_PORT || 5000;
 const express = require('express');
 const app = express();
 
-//handle CORS related issues we might face if we try to access our api from a different dormain.
-app.use((req, res, next) => {
-   res.header("Access-Control-Allow-Origin", "*");
-   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-   next();
- });
-
-
 //To parse URL encoded data
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }))
