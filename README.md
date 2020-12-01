@@ -16,11 +16,11 @@ CRM is using express router and mongodb for database operations and React for fr
          - index.js
          - leadRouter.js
          - saleRouter.js
-- client/                 //this folder is for react code for front end
+- client/                 **//this folder is for react code for front end**
    - public/
    - src/
       - api/
-          - bootapi.js    //content baseurl http:localhost:5000 
+          - bootapi.js    **//content baseurl http:localhost:5000** 
       - components/
          - Client.js
 		 - Sale.js

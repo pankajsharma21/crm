@@ -44,6 +44,7 @@ class AddClient extends Component {
         .then(res => {
           if(res.data){
             console.log("added successfully");
+            alert("added successfully");
             this.props.getClients();
             this.setState({
               client_id: null,
