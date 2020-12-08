@@ -1,33 +1,29 @@
 import React, { Component } from 'react';
-import nextId from "react-id-generator";
-import base_url from "./../api/bootapi";
+//import nextId from "react-id-generator";
 import axios from 'axios';
-import { Button, Form, FormGroup, Label, Input} from 'reactstrap';
-
+//import {Form, FormGroup,} from 'reactstrap';
+//import {Button,Card,CardContent,} from '@material-ui/core';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 class AddClient extends Component {
-  htmlId = nextId("CLI-");
+ // htmlId = nextId("CLI-");
 
   state = {
-    client_id: null,
+    client_id: "",
     client_name: "",
     company_name: "",
     position: "",
-    tel: null,
+    tel: "",
     email: "",
     last_contacted_on: "",
   }
 
-  handleChange = (event) => {
-    const target = event.target;  
-       const value = target.type === 'checkbox' ? target.checked : target.value;  
-       const name = target.name;  
-       this.setState({  
-           [name]: value  
-       });  
-  }
 
 
-  addClient = () => {
+ 
+
+  addClient = (event) => {
+
     const client = {
       client_id: this.state.client_id,
       client_name: this.state.client_name,
@@ -39,19 +35,19 @@ class AddClient extends Component {
     }
 
      //to check if for empty js object
-    if(Object.keys(client).length > 0 && client.constructor === Object){
-      axios.post(`${base_url}/clients`, client)
+    if(Object.keys(client).length !== 0 && client.constructor === Object){
+      axios.post('http://localhost:5000/api/clients', client)
         .then(res => {
           if(res.data){
             console.log("added successfully");
-            alert("added successfully");
+            toast.success("added successfully");
             this.props.getClients();
             this.setState({
-              client_id: null,
+              client_id: "",
               client_name: "",
               company_name: "",
               position: "",
-              tel: null,
+              tel: "",
               email: "",
               last_contacted_on: ""
             })
@@ -63,7 +59,11 @@ class AddClient extends Component {
     }
   }
 
- 
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name] : e.target.value
+    })
+  }
 
   render() {
     let {
@@ -78,39 +78,34 @@ class AddClient extends Component {
 
     return (
       <div>
-         <Form onSubmit = {this.addClient}>
-      <FormGroup>
-        <Label for="client_id" htmlFor={this.htmlId}>Client Id</Label>
-        <Input type="text" name="client_id" placeholder="CLI-0000"   id={this.htmlId} onChange={this.handleChange}  value={client_id}/>
-      </FormGroup>
-      <FormGroup>
-        <label>Enter the Client Name </label>
-        <input name="client_name" type="text" class="form-control" onChange={this.handleChange} placeholder="Enter Client Name here" value={client_name} />
-      </FormGroup>
-    <FormGroup>
-        <label>Enter the Client Company </label>
-        <input name="company_name" type="text" class="form-control" onChange={this.handleChange} placeholder="Enter Client Company Name here" value={company_name} />
-      </FormGroup>
-    <FormGroup>
-        <label>Enter the Client Position </label>
-        <input name="position" type="text" class="form-control" onChange={this.handleChange} placeholder="Enter Client Position Name here" value={position} />
-      </FormGroup>
-    <FormGroup>
-        <label>Enter the Client Mobile no.  </label>
-        <input name="tel" type="text" class="form-control" onChange={this.handleChange} placeholder="Enter Client Mobile no. Name here" value={tel} />
-      </FormGroup>
-    <FormGroup>
-        <label>Enter the Client email </label>
-        <input name="email" type="text" class="form-control" onChange={this.handleChange} placeholder="Enter Client Email here" value={email} />
-      </FormGroup>
-    <FormGroup>
-        <label>Enter the Client Last Contacted date </label>
-        <input name="last_contacted_on" type="text" class="form-control" onChange={this.handleChange} placeholder="Enter Client Last contacted  here" value={last_contacted_on} />
-      </FormGroup>
-      <Button type = "submit" className="btn btn-success">add Client</Button>
-    </Form>
-      
-      </div>
+      <form>
+        <div className="form-group">
+          <input type="text" name="client_id" placeholder="Client ID" className="form-control" onChange={this.handleChange} value={client_id} required />
+        </div>
+        <div className="form-group">
+          <input type="text" name="client_name" placeholder="Client name" className="form-control" onChange={this.handleChange} value={client_name} required />
+        </div>
+        <div className="form-group">
+          <input type="text" name="company_name" placeholder="Company name" className="form-control" onChange={this.handleChange} value={company_name} required />
+        </div>
+        <div className="form-group">
+          <input type="text" name="position" placeholder="Position" className="form-control" onChange={this.handleChange} value={position} required />
+        </div>
+        <div className="form-group">
+          <input type="text" name="tel" placeholder="Phone no." className="form-control" onChange={this.handleChange} value={tel} required />
+        </div>
+        <div className="form-group">
+          <input type="email" name="email" placeholder="Email ID" className="form-control" onChange={this.handleChange} value={email} required />
+        </div>
+        <div className="form-group">
+          <input type="date" name="last_contacted_on" placeholder="Last contacted on" className="form-control" onChange={this.handleChange} value={last_contacted_on} required />
+        </div>
+        <button type="button" className="btn btn-success" onClick={this.addClient}>add Client</button>
+      </form>
+      <>
+    <ToastContainer autoClose={false} />
+    </>
+    </div>
     )
   }
 }

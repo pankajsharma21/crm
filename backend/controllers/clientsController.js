@@ -32,8 +32,9 @@ exports.delete_single = function(req, res){
 
 // Handle client create on POST request.
 exports.create_post = function(req, res){
+   console.log("get a request");
     var clientInfo = req.body; //Get the parsed information
-    
+    console.log(clientInfo );
     if(!clientInfo.company_name || !clientInfo.client_name || !clientInfo.tel){
        res.json({ status: "error",
           message: "Sorry, you provided worng info"});
