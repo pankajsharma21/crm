@@ -36,7 +36,7 @@ class AddClient extends Component {
 
      //to check if for empty js object
     if(Object.keys(client).length !== 0 && client.constructor === Object){
-      axios.post('http://localhost:5000/api/clients', client)
+      axios.post('/api/clients', client)
         .then(res => {
           if(res.data){
             console.log("added successfully");
