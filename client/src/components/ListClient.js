@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table } from 'reactstrap';
 
-const ListClient = ({ clients, deleteClient }) => {
+const ListClient = ({ clients, deleteClient, editClient,formatDate }) => {
 
   return (
     <Table>
@@ -29,10 +29,10 @@ const ListClient = ({ clients, deleteClient }) => {
                     <td>{client.position}</td>
                     <td>{client.tel}</td>
                     <td>{client.email}</td>
-                    <td>{client.last_contacted_on}</td>
-                    <td><i style = {{marginRight : 20 }}className="fa fa-trash" onClick={() => {if(window.confirm("Are you sure?"))deleteClient(client._id)}}></i>
+                    <td>{ formatDate(client.last_contacted_on, 'd/m/y')}</td>
+                    <td className="action-icon"><i style = {{marginRight : 20 }}className="fa fa-trash" onClick={() => {if(window.confirm("Are you sure?"))deleteClient(client._id)}}></i>
                     
-                    <i class='fa fa-edit'></i>
+                    <i class='fa fa-edit' onClick={() => {if(window.confirm("Are you sure?"))editClient(client._id)}}></i>
                     </td>
                     
                   </tr>
