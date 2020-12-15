@@ -11,7 +11,7 @@ class Client extends Component {
     clients: [],
     client: {
 			_id: "",
-			client_id: uuid(),
+			client_id: "client-"+uuid(),
 			client_name: "",
 			company_name: "",
 			position: "",

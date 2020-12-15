@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import uuid from 'react-uuid';
-//import nextId from "react-id-generator";
 import axios from 'axios';
 //import {Form, FormGroup,} from 'reactstrap';
 //import {Button,Card,CardContent,} from '@material-ui/core';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 class AddClient extends Component {
- // htmlId = nextId("CLI-");
   state = {
-    client_id: uuid(),
+    client_id: "client-"+uuid(),
     client_name: "",
     company_name: "",
     position: "",
