@@ -26,6 +26,7 @@ class AddLead extends Component {
   }
 
   addLead = (e) => {
+
     const lead = {
       lead_id: this.state.lead_id,
       created_on: this.state.created_on,
@@ -44,15 +45,16 @@ class AddLead extends Component {
       is_delete: this.state.is_delete,
     }
 
-    if(Object.keys(lead).length === 0 && lead.constructor === Object){
+    if (Object.keys(lead).length !== 0 && lead.constructor === Object) {
       axios.post('/api/leads', lead)
         .then(res => {
-          if(res.data){
-            toast.success("added successfully");
+          if (res.data) {
+
+            this.showAlert("success", "Lead added!");
 
             this.props.getLeads();
             this.setState({
-               lead_id: uuid(),
+              lead_id: uuid(),
               created_on: "",
               source: "",
               assigned_to: "",
@@ -71,7 +73,7 @@ class AddLead extends Component {
           }
         })
         .catch(err => console.log(err))
-    }else {
+    } else {
       console.log('input field required')
     }
   }
