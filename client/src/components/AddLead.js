@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import uuid from 'react-uuid';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import { Alert } from 'reactstrap';
 
 
 class AddLead extends Component {
@@ -23,6 +22,28 @@ class AddLead extends Component {
     comments: "",
     connected_times: "",
     is_delete: false,
+    visible: false,
+    color: 'success',
+    msg: '',
+  }
+
+  showAlert = (color, msg) => {
+    console.log("showAlert!!!");
+    this.setState({
+      color: color
+    });
+    this.setState({
+      msg: msg
+    });
+    this.setState({
+      visible: true
+    }, () => {
+      window.setTimeout(() => {
+        this.setState({
+          visible: false
+        })
+      }, 2000)
+    });
   }
 
   addLead = (e) => {
@@ -143,7 +164,6 @@ class AddLead extends Component {
     })
   }
 
-
   componentDidUpdate(prevProp) {
     if (prevProp.lead.lead_id !== this.props.lead.lead_id) {
       let {
@@ -170,7 +190,7 @@ class AddLead extends Component {
   }
 
   render() {
-    let { 
+    let {
       _id,
       lead_id,
       created_on,
@@ -194,94 +214,92 @@ class AddLead extends Component {
 
     return (
       <div>
-      <form>
-        <div className="form-group">
-          <input type="text" name="lead_id" placeholder="Lead ID"
-            className="form-control" onChange={this.handleChange}
-            value={lead_id} required />
-        </div>
-        <div className="form-group">
-          <input type="date" name="created_on" placeholder="Created on"
-            className="form-control" onChange={this.handleChange}
-            value={this.props.formatDate(created_on)} required />
-        </div>
-        <div className="form-group">
-          <input type="text" name="source" placeholder="Source"
-            className="form-control" onChange={this.handleChange}
-            value={source} required />
-        </div>
-        <div className="form-group">
-          <input type="text" name="assigned_to" placeholder="Assigned to"
-            className="form-control" onChange={this.handleChange}
-            value={assigned_to} required />
-        </div>
-        <div className="form-group">
-          <input type="text" name="client_name"
-            placeholder="Client name" className="form-control"
-            onChange={this.handleChange} value={client_name} required />
-        </div>
-        <div className="form-group">
-          <input type="text" name="company"
-            placeholder="Company" className="form-control"
-            onChange={this.handleChange}
-            value={company} required />
-        </div>
-        <div className="form-group">
-          <input type="text" name="position" placeholder="Position"
-            className="form-control" onChange={this.handleChange}
-            value={position} required />
-        </div>
-        <div className="form-group">
-          <input type="text" name="tel_no" placeholder="Phone no."
-            className="form-control" onChange={this.handleChange}
-            value={tel_no} required />
-        </div>
-        <div className="form-group">
-          <input type="email" name="email" placeholder="Email ID"
-            className="form-control" onChange={this.handleChange}
-            value={email} required />
-        </div>
-        <div className="form-group">
-          <input type="text" name="domain" placeholder="Domain"
-            className="form-control" onChange={this.handleChange}
-            value={domain} required />
-        </div>
-        <div className="form-group">
-          <input type="text" name="status" placeholder="status"
-            className="form-control" onChange={this.handleChange}
-            value={status} required />
-        </div>
-        <div className="form-group">
-          <input type="text" name="confidence" placeholder="Confindence"
-            className="form-control" onChange={this.handleChange}
-            value={confidence} required />
-        </div>
-        <div className="form-group">
-          <input type="text" name="connected_times" placeholder="Connected Times?"
-            className="form-control" onChange={this.handleChange}
-            value={connected_times} required />
-        </div>
-        <div className="form-group">
-          <input type="text" name="is_delete" placeholder="Deleted?"
-            className="form-control" onChange={this.handleChange}
-            value={is_delete} required />
-        </div>
-        <div className="form-group">
-          <textarea type="text" name="comments" placeholder="Comments"
-            className="form-control" onChange={this.handleChange}
-            value={comments} required></textarea>
-        </div>
-        <input type="hidden" name="_id" value={_id} />
-        {this.props.isEdit ? <button type="button" className="btn btn-success"
-          onClick={this.updateLead}> Update Lead </button>
-          : <button type="button" className="btn btn-success"
-            onClick={this.addLead}> Add Lead </button>
-        }
-      </form>
-      <>
-    <ToastContainer autoClose={false} />
-    </>
-    </div>
+        <form>
+          <div className="form-group">
+            <input type="text" name="lead_id" placeholder="Lead ID"
+              className="form-control" onChange={this.handleChange}
+              value={lead_id} required />
+          </div>
+          <div className="form-group">
+            <input type="date" name="created_on" placeholder="Created on"
+              className="form-control" onChange={this.handleChange}
+              value={this.props.formatDate(created_on)} required />
+          </div>
+          <div className="form-group">
+            <input type="text" name="source" placeholder="Source"
+              className="form-control" onChange={this.handleChange}
+              value={source} required />
+          </div>
+          <div className="form-group">
+            <input type="text" name="assigned_to" placeholder="Assigned to"
+              className="form-control" onChange={this.handleChange}
+              value={assigned_to} required />
+          </div>
+          <div className="form-group">
+            <input type="text" name="client_name"
+              placeholder="Client name" className="form-control"
+              onChange={this.handleChange} value={client_name} required />
+          </div>
+          <div className="form-group">
+            <input type="text" name="company"
+              placeholder="Company" className="form-control"
+              onChange={this.handleChange}
+              value={company} required />
+          </div>
+          <div className="form-group">
+            <input type="text" name="position" placeholder="Position"
+              className="form-control" onChange={this.handleChange}
+              value={position} required />
+          </div>
+          <div className="form-group">
+            <input type="text" name="tel_no" placeholder="Phone no."
+              className="form-control" onChange={this.handleChange}
+              value={tel_no} required />
+          </div>
+          <div className="form-group">
+            <input type="email" name="email" placeholder="Email ID"
+              className="form-control" onChange={this.handleChange}
+              value={email} required />
+          </div>
+          <div className="form-group">
+            <input type="text" name="domain" placeholder="Domain"
+              className="form-control" onChange={this.handleChange}
+              value={domain} required />
+          </div>
+          <div className="form-group">
+            <input type="text" name="status" placeholder="status"
+              className="form-control" onChange={this.handleChange}
+              value={status} required />
+          </div>
+          <div className="form-group">
+            <input type="text" name="confidence" placeholder="Confindence"
+              className="form-control" onChange={this.handleChange}
+              value={confidence} required />
+          </div>
+          <div className="form-group">
+            <input type="text" name="connected_times" placeholder="Connected Times?"
+              className="form-control" onChange={this.handleChange}
+              value={connected_times} required />
+          </div>
+          <div className="form-group">
+            <input type="text" name="is_delete" placeholder="Deleted?"
+              className="form-control" onChange={this.handleChange}
+              value={is_delete} required />
+          </div>
+          <div className="form-group">
+            <textarea type="text" name="comments" placeholder="Comments"
+              className="form-control" onChange={this.handleChange}
+              value={comments} required></textarea>
+          </div>
+          <Alert color={color} isOpen={visible}>{msg}</Alert>
+          <input type="hidden" name="_id" value={_id} />
+          {this.props.isEdit ? <button type="button" className="btn btn-success"
+            onClick={this.updateLead}> Update Lead </button>
+            : <button type="button" className="btn btn-success"
+              onClick={this.addLead}> Add Lead </button>
+          }
+        </form>
+      </div>
     )
   }
 }
