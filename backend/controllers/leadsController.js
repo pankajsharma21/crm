@@ -26,7 +26,7 @@ exports.update_single = function (req, res) {
 
 // Handle delete single lead on DELETE request.
 exports.delete_single = function (req, res) {
-	client.findByIdAndRemove(req.params.id, function (err, response) {
+	Lead.findByIdAndRemove(req.params.id, function (err, response) {
 		if (err) res.json({
 			message: "Error in deleting record id " + req.params.id
 		});
